@@ -1,0 +1,58 @@
+﻿@model RestorauntManagement.ViewModels.User.ManageUsersViewModel
+
+@using Microsoft.AspNetCore.Identity
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+@inject UserManager<ApplicationUser> UserManager
+
+
+    <div class="container">
+        <br />
+        <a asp-controller="User" asp-action="Register" class="btn btn-primary">Create new user</a>
+        <a asp-controller="Role" asp-action="Create" class="btn btn-primary">Create new Role</a>
+        <hr />
+        <br />
+        <table class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Roles</th>
+                    <th>Manage Roles</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>
+                            @foreach (var role in await UserManager.GetRolesAsync(user))
+                            {
+                                <p>@role</p>
+                            }
+                        </td>
+                        <td>
+                            @foreach (var role in Model.Roles)
+                            {
+                                if (await UserManager.IsInRoleAsync(user, role.Name))
+                                {
+                                    <p>
+                                        <a asp-controller="Role" asp-action="RemoveRole" asp-route-roleName="@role.Name" asp-route-userId="@user.Id" class="text-danger">Remove @role.Name.ToLower() role</a>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p>
+                                        <a asp-controller="Role" asp-action="AddRole" asp-route-roleName="@role.Name" asp-route-userId="@user.Id" class="text-success">Set @role.Name.ToLower() role</a>
+                                    </p>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
