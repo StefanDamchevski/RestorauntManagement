@@ -1,4 +1,4 @@
-﻿using RestorauntManagement.ViewModels.Product;
+﻿using RestorauntManagement.ViewModels.ProductReceipts;
 using System.Collections.Generic;
 
 namespace RestorauntManagement.ViewModels.Table
@@ -7,6 +7,6 @@ namespace RestorauntManagement.ViewModels.Table
     {
         public int Id { get; set; }
         public string TableName { get; set; }
-        public List<ProductViewModel> Products { get; set; }
+        public List<ProductReceiptModel> Products { get; set; }
     }
 }

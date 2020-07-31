@@ -18,17 +18,21 @@ namespace RestorauntManagement.Controllers
             this.tableService = tableService;
         }
 
-        [Authorize]
         public IActionResult Overview()
         {
             List<TableOverviewModel> models = tableService.GetAll();
             return View(models);
         }
 
-        [Authorize]
         public IActionResult ReserveTable(int tableId)
         {
-            tableService.Reserve(tableId);
+            tableService.Reserve(tableId, User.Identity.Name);
+            return RedirectToAction(nameof(Overview));
+        }
+
+        public IActionResult CloseTable(int tableId)
+        {
+            tableService.Close(tableId);
             return RedirectToAction(nameof(Overview));
         }
 
@@ -50,11 +54,17 @@ namespace RestorauntManagement.Controllers
             return View();
         }
 
-        [Authorize]
         public IActionResult Details(int tableId)
         {
             TableDetailsModel model = tableService.GetById(tableId).ToTableDetailsModel(); 
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddToTable([FromBody]AddToTableViewModel model)
+        {
+            tableService.AddProductsToTable(model.TableId, model.Products);
+            return Ok();
         }
     }
 }

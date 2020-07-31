@@ -5,5 +5,6 @@
         public int Id { get; set; }
         public string TableName { get; set; }
         public bool IsAvailable { get; set; }
+        public string ServedBy { get; set; }
     }
 }

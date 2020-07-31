@@ -1,0 +1,52 @@
+﻿@model RestorauntManagement.ViewModels.Product.MenuViewModel
+
+@{
+    ViewData["Title"] = "ShowMenu";
+}
+
+<h1>ShowMenu</h1>
+
+<input hidden id="tableId" value="@Model.TableId" />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products) 
+        {
+            <tr>
+                <td>
+                    @product.Name
+                </td>
+                <td>
+                    @product.Price
+                </td>
+                <td>
+                    @product.Quantity
+                </td>
+                <td>
+                    <input type="number" id="@product.Id" value="0" min="0" class="quantityInput"/>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-primary" onclick="addToReceipt()">Add To Receipt</button>
+
+@section Scripts{ 
+    <script src="~/lib/axios/axios.js"></script>
+    <script src="~/js/receipt.js"></script>
+}

@@ -3,6 +3,7 @@ using RestorauntManagement.Repositories.Interfaces;
 using RestorauntManagement.Services.Intefaces;
 using RestorauntManagement.ViewModels.ActionMessage;
 using RestorauntManagement.ViewModels.Product;
+using System.Collections.Generic;
 
 namespace RestorauntManagement.Services
 {
@@ -35,6 +36,21 @@ namespace RestorauntManagement.Services
                 response.Error = $"Create Failed. Product with name {model.Name} already exists";
             }
             return response;
+        }
+
+        public List<Product> GetAll()
+        {
+            return productRepository.GetAll();
+        }
+
+        public List<Product> GetAllIds(List<int> ids)
+        {
+            return productRepository.GetByIds(ids);
+        }
+
+        public void UpdateRange(List<Product> updatedProducts)
+        {
+            productRepository.UpdateRange(updatedProducts);
         }
     }
 }

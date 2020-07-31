@@ -1,0 +1,22 @@
+﻿@model RestorauntManagement.ViewModels.Table.TableDetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <p>Table name: @Model.TableName</p>
+    <a asp-action="CloseTable" asp-route-tableId="@Model.Id" class="btn btn-primary">Close Table</a>
+    <a asp-controller="Product" asp-action="ShowMenu" class="btn btn-primary" asp-route-tableId="@Model.Id">Show Menu</a>
+
+    <ol>
+        @foreach (var product in Model.Products)
+        {
+            decimal productFullPrice = product.Price * product.Quantity;
+            <li>@product.Name - @product.Price MKD x @product.Quantity - @productFullPrice</li>
+        }
+    </ol>
+    <p>FullPrice: @Model.Products.Sum(x => x.Price * x.Quantity)</p>
+</div>

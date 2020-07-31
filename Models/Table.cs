@@ -10,6 +10,7 @@ namespace RestorauntManagement.Models
         public string TableName { get; set; }
         [Required]
         public bool IsAvailable { get; set; }
+        public string ServedBy { get; set; }
         public List<Receipt> Receipts { get; set; }
     }
 }
